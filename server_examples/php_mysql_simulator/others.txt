@@ -1,4 +1,4 @@
-# Ubuntu/Debian
+# 启用必要的模块
 sudo a2enmod rewrite
 sudo a2enmod expires
 sudo a2enmod proxy
