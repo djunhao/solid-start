@@ -1,0 +1,26 @@
+# Ubuntu/Debian
+sudo a2enmod rewrite
+sudo a2enmod expires
+sudo a2enmod proxy
+sudo a2enmod proxy_fcgi
+
+# CentOS/RHEL
+# 在 /etc/httpd/conf.modules.d/ 中确保以下模块已加载
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule expires_module modules/mod_expires.so
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+
+# 设置正确的所有权
+sudo chown -R apache:apache /usr/local/www/some
+sudo chown -R apache:apache /usr/local/www/phpMyAdmin
+
+# 或者对于Debian/Ubuntu
+sudo chown -R www-data:www-data /usr/local/www/some
+sudo chown -R www-data:www-data /usr/local/www/phpMyAdmin
+
+# 设置适当的权限
+sudo find /usr/local/www/some -type f -exec chmod 644 {} \;
+sudo find /usr/local/www/some -type d -exec chmod 755 {} \;
+sudo find /usr/local/www/phpMyAdmin -type f -exec chmod 644 {} \;
+sudo find /usr/local/www/phpMyAdmin -type d -exec chmod 755 {} \;
