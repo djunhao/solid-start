@@ -8,9 +8,6 @@ export function createRouter() {
     defaultPreload: "intent",
     defaultStaleTime: 5000,
     scrollRestoration: true,
-    context: {
-      auth: undefined!, // We'll inject this when we render
-    },
   });
   return router;
 }

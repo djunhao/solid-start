@@ -12,10 +12,11 @@ import { AuthProvider } from "~/context/auth";
 
 const Devtools = clientOnly(() => import("../components/Devtools"));
 
-export const Route = createRootRouteWithContext<{
-  auth: Auth;
-}>()({
+export const Route = createRootRoute({
   component: RootComponent,
+  notFoundComponent: () => {
+    return <p>This setting page doesn't exist!</p>;
+  },
 });
 
 function RootComponent() {
