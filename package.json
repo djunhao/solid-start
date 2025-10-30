@@ -8,18 +8,18 @@
     "version": "vinxi version"
   },
   "dependencies": {
-    "@solidjs/start": "^1.1.2",
-    "@tanstack/router-plugin": "^1.112.0",
-    "@tanstack/solid-router": "^1.114.1",
-    "@tanstack/solid-router-devtools": "^1.114.1",
-    "solid-js": "^1.9.5",
-    "vinxi": "^0.5.7"
+    "@solidjs/start": "^1.2.0",
+    "@tanstack/router-plugin": "^1.133.36",
+    "@tanstack/solid-router": "^1.133.36",
+    "@tanstack/solid-router-devtools": "^1.133.36",
+    "solid-js": "^1.9.10",
+    "vinxi": "^0.5.8"
   },
   "engines": {
     "node": ">=22"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.14",
-    "tailwindcss": "^4.1.14"
+    "@tailwindcss/vite": "^4.1.16",
+    "tailwindcss": "^4.1.16"
   }
 }

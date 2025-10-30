@@ -3,7 +3,6 @@ import { routeTree } from "./routeTree.gen";
 
 export function createRouter() {
   const router = createTanstackSolidRouter({
-    defaultErrorComponent: (err) => <div>{err.error.stack}</div>,
     routeTree,
     defaultPreload: "intent",
     defaultStaleTime: 5000,

@@ -63,15 +63,15 @@ const COOKIE_NAME = "auth_token";
 const SESSION_TTL = 3600; // seconds
 
 $DATA_DIR = __DIR__;
-$USERS_FILE = $DATA_DIR . '/users.json';
-$SESSIONS_FILE = $DATA_DIR . '/sessions.json';
+$USERS_FILE = "$DATA_DIR/users.json";
+$SESSIONS_FILE = "$DATA_DIR/sessions.json";
 
 // DB via env
-$dbHost = getenv("DB_HOST") ?: null;
-$dbName = getenv("DB_NAME") ?: null;
-$dbUser = getenv("DB_USER") ?: null;
-$dbPass = getenv("DB_PASS") ?: null;
-$dbPort = getenv("DB_PORT") ?: null; // optional
+$dbHost = getenv("PGHOST") ?: null;
+$dbName = getenv("PGDATABASE") ?: null;
+$dbUser = getenv("PGUSER") ?: null;
+$dbPass = getenv("PGPASSFILE") ?: null;
+$dbPort = getenv("PGPORT") ?: null; // optional
 
 // Cookie secure flag (default false for local dev); set env COOKIE_SECURE=1 in production
 $cookieSecureEnv = getenv("COOKIE_SECURE");
@@ -264,7 +264,7 @@ function get_pdo(): ?PDO
 function pdo_find_user_by_username(PDO $pdo, string $username): ?array
 {
     $stmt = $pdo->prepare(
-        "SELECT id::text, username, password_hash, name FROM users WHERE username = ? LIMIT 1"
+        "SELECT id::text, username, password_hash, name FROM users WHERE username = ? LIMIT 1",
     );
     $stmt->execute([$username]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -274,7 +274,7 @@ function pdo_find_user_by_username(PDO $pdo, string $username): ?array
 function pdo_find_user_by_id(PDO $pdo, $id): ?array
 {
     $stmt = $pdo->prepare(
-        "SELECT id::text, username, name FROM users WHERE id = ? LIMIT 1"
+        "SELECT id::text, username, name FROM users WHERE id = ? LIMIT 1",
     );
     $stmt->execute([$id]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -286,7 +286,7 @@ function pdo_create_session(PDO $pdo, string $userId): string
     $token = bin2hex(random_bytes(32));
     $expiresAt = date("Y-m-d H:i:s", time() + SESSION_TTL);
     $stmt = $pdo->prepare(
-        "INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)"
+        "INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)",
     );
     $stmt->execute([$token, $userId, $expiresAt]);
     return $token;
@@ -299,7 +299,7 @@ function pdo_get_user_from_cookie(PDO $pdo): ?array
     }
     $token = $_COOKIE[COOKIE_NAME];
     $stmt = $pdo->prepare(
-        "SELECT user_id FROM sessions WHERE token = ? AND expires_at > now() LIMIT 1"
+        "SELECT user_id FROM sessions WHERE token = ? AND expires_at > now() LIMIT 1",
     );
     $stmt->execute([$token]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -508,4 +508,3 @@ if ($path === "/api/auth/logout" && $method === "POST") {
 
 // Not found
 json_output(["error" => "Not Found"], 404);
-?>
